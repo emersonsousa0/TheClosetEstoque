@@ -1,0 +1,22 @@
+# Ambiente virtual
+venv/
+env/
+
+# Banco de dados e backups
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos Python temporários
+__pycache__/
+*.py[cod]
+
+# Configurações e segredos locais
+.env
+.env.*
+!.env.example
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

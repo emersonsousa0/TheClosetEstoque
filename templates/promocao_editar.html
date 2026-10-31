@@ -1,0 +1,1008 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Promoção - The Closet</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>THE CLOSET</h2>
+
+    <p class="menu-subtitle">
+        GESTÃO DE ESTOQUE
+    </p>
+
+    <nav>
+
+        <a href="/">🏠 Dashboard</a>
+        <a href="/produtos">📦 Produtos</a>
+        <a href="/entradas">📥 Entradas</a>
+        <a href="/vendas">🛒 Vendas</a>
+        <a href="/estoque">📊 Estoque</a>
+        <a href="/promocoes">🏷️ Promoções</a>
+
+    </nav>
+
+</div>
+
+
+<div class="content">
+
+    <h1>Editar promoção</h1>
+
+    <p class="subtitle">
+        Altere os dados e os produtos da promoção
+    </p>
+
+
+    <div class="form-card">
+
+        <form
+            method="POST"
+            action="/promocoes/editar/{{ promocao.id }}"
+            id="promotionForm"
+        >
+
+            <!-- NOME -->
+
+            <div class="form-group">
+
+                <label for="nome">
+                    Nome da promoção
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value="{{ promocao.nome }}"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DATAS -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="data_inicio">
+                        Data de início
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_inicio"
+                        name="data_inicio"
+                        value="{{ promocao.data_inicio.strftime('%Y-%m-%d') }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="data_fim">
+                        Data de término
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_fim"
+                        name="data_fim"
+                        value="{{ promocao.data_fim.strftime('%Y-%m-%d') }}"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUTOS -->
+
+            <div class="promotion-items-header">
+
+                <h2>
+                    Produtos da promoção
+                </h2>
+
+            </div>
+
+
+            <div id="promotionItems">
+
+
+                {% for item in promocao.itens %}
+
+                <div class="promotion-item">
+
+                    <div class="promotion-item-header">
+
+                        <strong>
+                            Produto {{ loop.index }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- PRODUTO -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Produto
+                        </label>
+
+                        <select
+                            name="produto_id[]"
+                            class="produto-select"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione um produto
+                            </option>
+
+                            {% for produto in produtos %}
+
+                                <option
+                                    value="{{ produto.id }}"
+                                    data-unico="{{ produto.tamanho_unico }}"
+                                    data-p="{{ produto.tamanho_p }}"
+                                    data-m="{{ produto.tamanho_m }}"
+                                    data-g="{{ produto.tamanho_g }}"
+                                    data-gg="{{ produto.tamanho_gg }}"
+                                    data-preco="{{ produto.preco }}"
+                                    {% if produto.id == item.produto_id %}selected{% endif %}
+                                >
+
+                                    {{ produto.nome }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TAMANHOS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Estoque e quantidade para promoção
+                        </label>
+
+
+                        <div class="promotion-size-table">
+
+                            <div class="promotion-size-row promotion-size-header">
+
+                                <div>Tamanho</div>
+                                <div>Estoque</div>
+                                <div>Quantidade</div>
+
+                            </div>
+
+
+                            <!-- ÚNICO -->
+
+                            <div class="promotion-size-row">
+
+                                <div>
+                                    <strong>Único</strong>
+                                </div>
+
+                                <div class="estoque-cell estoque-unico">
+                                    —
+                                </div>
+
+                                <div>
+
+                                    <input
+                                        type="number"
+                                        name="quantidade_unico[]"
+                                        class="quantidade-tamanho quantidade-unico"
+                                        min="0"
+                                        value="{% if item.tamanho == 'Único' %}{{ item.quantidade }}{% else %}0{% endif %}"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- P -->
+
+                            <div class="promotion-size-row">
+
+                                <div>
+                                    <strong>P</strong>
+                                </div>
+
+                                <div class="estoque-cell estoque-p">
+                                    —
+                                </div>
+
+                                <div>
+
+                                    <input
+                                        type="number"
+                                        name="quantidade_p[]"
+                                        class="quantidade-tamanho quantidade-p"
+                                        min="0"
+                                        value="{% if item.tamanho == 'P' %}{{ item.quantidade }}{% else %}0{% endif %}"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- M -->
+
+                            <div class="promotion-size-row">
+
+                                <div>
+                                    <strong>M</strong>
+                                </div>
+
+                                <div class="estoque-cell estoque-m">
+                                    —
+                                </div>
+
+                                <div>
+
+                                    <input
+                                        type="number"
+                                        name="quantidade_m[]"
+                                        class="quantidade-tamanho quantidade-m"
+                                        min="0"
+                                        value="{% if item.tamanho == 'M' %}{{ item.quantidade }}{% else %}0{% endif %}"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- G -->
+
+                            <div class="promotion-size-row">
+
+                                <div>
+                                    <strong>G</strong>
+                                </div>
+
+                                <div class="estoque-cell estoque-g">
+                                    —
+                                </div>
+
+                                <div>
+
+                                    <input
+                                        type="number"
+                                        name="quantidade_g[]"
+                                        class="quantidade-tamanho quantidade-g"
+                                        min="0"
+                                        value="{% if item.tamanho == 'G' %}{{ item.quantidade }}{% else %}0{% endif %}"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- GG -->
+
+                            <div class="promotion-size-row">
+
+                                <div>
+                                    <strong>GG</strong>
+                                </div>
+
+                                <div class="estoque-cell estoque-gg">
+                                    —
+                                </div>
+
+                                <div>
+
+                                    <input
+                                        type="number"
+                                        name="quantidade_gg[]"
+                                        class="quantidade-tamanho quantidade-gg"
+                                        min="0"
+                                        value="{% if item.tamanho == 'GG' %}{{ item.quantidade }}{% else %}0{% endif %}"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <small class="estoque-info">
+                            Selecione um produto para visualizar o estoque.
+                        </small>
+
+                    </div>
+
+
+                    <!-- PREÇO ATUAL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Preço atual
+                        </label>
+
+                        <div class="current-price">
+
+                            R$
+
+                            <span class="preco-atual">
+                                0,00
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PREÇO PROMOCIONAL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Preço promocional
+                        </label>
+
+                        <input
+                            type="number"
+                            name="preco_promocional[]"
+                            class="preco-promocional"
+                            min="0"
+                            step="0.01"
+                            value="{{ item.preco_promocional }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- REMOVER -->
+
+                    <button
+                        type="button"
+                        class="btn-remove-item"
+                        onclick="removerItem(this)"
+                    >
+
+                        🗑️ Remover produto
+
+                    </button>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- BOTÕES -->
+
+            <div class="promotion-form-actions">
+
+                <button
+                    type="button"
+                    class="btn-add"
+                    onclick="adicionarItem()"
+                >
+
+                    ＋ Adicionar produto
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn-finish-promotion"
+                >
+
+                    ✓ Salvar alterações
+
+                </button>
+
+            </div>
+
+
+            <div class="form-cancel">
+
+                <a href="/promocoes">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let itemCount =
+    document.querySelectorAll(".promotion-item").length;
+
+
+/* ================================================= */
+/* CONFIGURAR PRODUTO */
+/* ================================================= */
+
+function configurarProduto(item) {
+
+    const produtoSelect =
+        item.querySelector(".produto-select");
+
+    const estoqueInfo =
+        item.querySelector(".estoque-info");
+
+    const precoAtual =
+        item.querySelector(".preco-atual");
+
+
+    const tamanhos = {
+
+        unico: {
+            estoque: item.querySelector(".estoque-unico"),
+            quantidade: item.querySelector(".quantidade-unico")
+        },
+
+        p: {
+            estoque: item.querySelector(".estoque-p"),
+            quantidade: item.querySelector(".quantidade-p")
+        },
+
+        m: {
+            estoque: item.querySelector(".estoque-m"),
+            quantidade: item.querySelector(".quantidade-m")
+        },
+
+        g: {
+            estoque: item.querySelector(".estoque-g"),
+            quantidade: item.querySelector(".quantidade-g")
+        },
+
+        gg: {
+            estoque: item.querySelector(".estoque-gg"),
+            quantidade: item.querySelector(".quantidade-gg")
+        }
+
+    };
+
+
+    function atualizarEstoque() {
+
+        const option =
+            produtoSelect.options[
+                produtoSelect.selectedIndex
+            ];
+
+
+        if (!option || !option.value) {
+
+            precoAtual.textContent = "0,00";
+
+            estoqueInfo.textContent =
+                "Selecione um produto para visualizar o estoque.";
+
+            return;
+
+        }
+
+
+        const preco =
+            Number(option.dataset.preco) || 0;
+
+
+        precoAtual.textContent =
+            preco.toFixed(2).replace(".", ",");
+
+
+        const estoques = {
+
+            unico:
+                Number(option.dataset.unico) || 0,
+
+            p:
+                Number(option.dataset.p) || 0,
+
+            m:
+                Number(option.dataset.m) || 0,
+
+            g:
+                Number(option.dataset.g) || 0,
+
+            gg:
+                Number(option.dataset.gg) || 0
+
+        };
+
+
+        Object.entries(estoques).forEach(
+            function([tamanho, estoque]) {
+
+                const linha =
+                    tamanhos[tamanho];
+
+
+                linha.estoque.textContent =
+                    estoque;
+
+
+                const valorAtual =
+                    Number(linha.quantidade.value) || 0;
+
+
+                if (estoque > 0) {
+
+                    linha.quantidade.readOnly = false;
+
+                    /*
+                     * Não apagamos uma quantidade
+                     * que já estava cadastrada.
+                     */
+
+                    if (valorAtual > estoque) {
+
+                        linha.quantidade.max = estoque;
+
+                    } else {
+
+                        linha.quantidade.max = estoque;
+
+                    }
+
+                } else {
+
+                    /*
+                     * Se o produto não possui
+                     * aquele tamanho, não permite edição.
+                     */
+
+                    if (valorAtual === 0) {
+
+                        linha.quantidade.value = 0;
+
+                    }
+
+                    linha.quantidade.readOnly = true;
+
+                    linha.quantidade.max = 0;
+
+                }
+
+            }
+        );
+
+
+        estoqueInfo.textContent =
+            "Informe a quantidade que deseja manter na promoção em cada tamanho.";
+
+    }
+
+
+    produtoSelect.addEventListener(
+        "change",
+        function() {
+
+            /*
+             * Quando o produto muda,
+             * zeramos as quantidades.
+             */
+
+            Object.values(tamanhos).forEach(
+                function(tamanho) {
+
+                    tamanho.quantidade.value = 0;
+
+                }
+            );
+
+
+            atualizarEstoque();
+
+        }
+    );
+
+
+    Object.values(tamanhos).forEach(
+        function(tamanho) {
+
+            tamanho.quantidade.addEventListener(
+                "input",
+                function() {
+
+                    const valor =
+                        Number(
+                            tamanho.quantidade.value
+                        ) || 0;
+
+
+                    const max =
+                        Number(
+                            tamanho.quantidade.max
+                        ) || 0;
+
+
+                    if (
+                        max > 0 &&
+                        valor > max
+                    ) {
+
+                        tamanho.quantidade.value =
+                            max;
+
+                    }
+
+
+                    if (valor < 0) {
+
+                        tamanho.quantidade.value =
+                            0;
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    atualizarEstoque();
+
+}
+
+
+/* ================================================= */
+/* ADICIONAR PRODUTO */
+/* ================================================= */
+
+function adicionarItem() {
+
+    const container =
+        document.getElementById(
+            "promotionItems"
+        );
+
+
+    const primeiroItem =
+        document.querySelector(
+            ".promotion-item"
+        );
+
+
+    const novoItem =
+        primeiroItem.cloneNode(true);
+
+
+    itemCount++;
+
+
+    novoItem.querySelector(
+        ".promotion-item-header strong"
+    ).textContent =
+        "Produto " + itemCount;
+
+
+    novoItem.querySelector(
+        ".produto-select"
+    ).value = "";
+
+
+    novoItem.querySelectorAll(
+        ".estoque-cell"
+    ).forEach(
+        function(celula) {
+
+            celula.textContent = "—";
+
+        }
+    );
+
+
+    novoItem.querySelectorAll(
+        ".quantidade-tamanho"
+    ).forEach(
+        function(input) {
+
+            input.value = 0;
+
+            input.readOnly = true;
+
+            input.max = 0;
+
+        }
+    );
+
+
+    novoItem.querySelector(
+        ".preco-atual"
+    ).textContent =
+        "0,00";
+
+
+    novoItem.querySelector(
+        ".preco-promocional"
+    ).value =
+        "";
+
+
+    novoItem.querySelector(
+        ".estoque-info"
+    ).textContent =
+        "Selecione um produto para visualizar o estoque.";
+
+
+    container.appendChild(
+        novoItem
+    );
+
+
+    configurarProduto(
+        novoItem
+    );
+
+
+    atualizarNumeracao();
+
+}
+
+
+/* ================================================= */
+/* REMOVER PRODUTO */
+/* ================================================= */
+
+function removerItem(botao) {
+
+    const itens =
+        document.querySelectorAll(
+            ".promotion-item"
+        );
+
+
+    if (itens.length === 1) {
+
+        return;
+
+    }
+
+
+    botao
+        .closest(".promotion-item")
+        .remove();
+
+
+    atualizarNumeracao();
+
+}
+
+
+/* ================================================= */
+/* NUMERAÇÃO */
+/* ================================================= */
+
+function atualizarNumeracao() {
+
+    const itens =
+        document.querySelectorAll(
+            ".promotion-item"
+        );
+
+
+    itens.forEach(
+        function(item, index) {
+
+            item.querySelector(
+                ".promotion-item-header strong"
+            ).textContent =
+                "Produto " + (index + 1);
+
+        }
+    );
+
+
+    itemCount =
+        itens.length;
+
+}
+
+
+/* ================================================= */
+/* VALIDAR */
+/* ================================================= */
+
+document
+    .getElementById("promotionForm")
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            const inicio =
+                document.getElementById(
+                    "data_inicio"
+                ).value;
+
+
+            const fim =
+                document.getElementById(
+                    "data_fim"
+                ).value;
+
+
+            if (
+                inicio &&
+                fim &&
+                fim < inicio
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "A data de término não pode ser anterior à data de início."
+                );
+
+                return;
+
+            }
+
+
+            const itens =
+                document.querySelectorAll(
+                    ".promotion-item"
+                );
+
+
+            for (
+                const item of itens
+            ) {
+
+                const produto =
+                    item.querySelector(
+                        ".produto-select"
+                    );
+
+
+                if (!produto.value) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Selecione um produto em todos os blocos."
+                    );
+
+                    return;
+
+                }
+
+
+                const quantidades =
+                    item.querySelectorAll(
+                        ".quantidade-tamanho"
+                    );
+
+
+                let quantidadeTotal = 0;
+
+
+                for (
+                    const quantidade of quantidades
+                ) {
+
+                    quantidadeTotal +=
+                        Number(
+                            quantidade.value
+                        ) || 0;
+
+
+                    const max =
+                        Number(
+                            quantidade.max
+                        ) || 0;
+
+
+                    if (
+                        max > 0 &&
+                        Number(quantidade.value) > max
+                    ) {
+
+                        event.preventDefault();
+
+                        alert(
+                            "Uma das quantidades informadas é maior que o estoque disponível."
+                        );
+
+                        quantidade.focus();
+
+                        return;
+
+                    }
+
+                }
+
+
+                if (
+                    quantidadeTotal === 0
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Informe pelo menos uma quantidade para a promoção."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+        }
+    );
+
+
+/* ================================================= */
+/* INICIALIZAR */
+/* ================================================= */
+
+document
+    .querySelectorAll(".promotion-item")
+    .forEach(
+        function(item) {
+
+            configurarProduto(item);
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
+```

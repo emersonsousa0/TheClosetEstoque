@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova Venda - The Closet</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="sidebar">
+
+    <h2>THE CLOSET</h2>
+
+    <p class="menu-subtitle">
+        GESTÃO DE ESTOQUE
+    </p>
+
+    <nav>
+
+        <a href="/">
+            🏠 Dashboard
+        </a>
+
+        <a href="/produtos">
+            📦 Produtos
+        </a>
+
+        <a href="/entradas">
+            📥 Entradas
+        </a>
+
+        <a href="/vendas">
+            🛒 Vendas
+        </a>
+
+        <a href="/estoque">
+            📊 Estoque
+        </a>
+
+        <a href="/promocoes">
+            🏷️ Promoções
+        </a>
+
+    </nav>
+
+</div>
+
+
+
+<div class="content">
+
+    <h1>Registrar venda</h1>
+
+    <p class="subtitle">
+        Registre uma nova venda realizada na loja
+    </p>
+
+
+    <div class="form-card">
+
+        <form method="POST"
+              action="/vendas/nova">
+
+
+            <!-- TIPO DA VENDA -->
+
+            <div class="form-group">
+
+                <label for="tipo_venda">
+                    Tipo da venda
+                </label>
+
+                <select
+                    name="tipo_venda"
+                    id="tipo_venda"
+                    required
+                >
+
+                    <option value="">
+                        Selecione o tipo da venda
+                    </option>
+
+                    <option value="normal">
+                        🛒 Venda normal
+                    </option>
+
+                    <option value="promocao">
+                        🏷️ Venda promocional
+                    </option>
+
+                </select>
+
+                <small id="tipoVendaAviso">
+                    Escolha se a venda será normal ou promocional.
+                </small>
+
+            </div>
+
+
+            <!-- PRODUTO -->
+
+            <div class="form-group">
+
+                <label for="produto_id">
+                    Produto
+                </label>
+
+                <select
+                    name="produto_id"
+                    id="produto_id"
+                    required
+                    disabled
+                >
+
+                    <option value="">
+                        Primeiro selecione o tipo da venda
+                    </option>
+
+                    {% for produto in produtos %}
+
+                        <option
+                            value="{{ produto.id }}"
+
+                            data-preco="{{ produto.preco }}"
+
+                            data-normal-unico="{{ produto.tamanho_unico }}"
+                            data-normal-p="{{ produto.tamanho_p }}"
+                            data-normal-m="{{ produto.tamanho_m }}"
+                            data-normal-g="{{ produto.tamanho_g }}"
+                            data-normal-gg="{{ produto.tamanho_gg }}"
+
+                            data-promo-unico="{{ produto.tamanho_unico_promocao }}"
+                            data-promo-p="{{ produto.tamanho_p_promocao }}"
+                            data-promo-m="{{ produto.tamanho_m_promocao }}"
+                            data-promo-g="{{ produto.tamanho_g_promocao }}"
+                            data-promo-gg="{{ produto.tamanho_gg_promocao }}"
+                        >
+
+                            {{ produto.nome }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- ESTOQUE DISPONÍVEL -->
+
+            <div
+                id="estoqueDisponivel"
+                class="stock-preview"
+                style="display: none;"
+            >
+
+                <h3 id="estoqueTitulo">
+                    Estoque disponível
+                </h3>
+
+                <div class="stock-sizes">
+
+                    <span id="stockUnico">
+                        Único: 0
+                    </span>
+
+                    <span id="stockP">
+                        P: 0
+                    </span>
+
+                    <span id="stockM">
+                        M: 0
+                    </span>
+
+                    <span id="stockG">
+                        G: 0
+                    </span>
+
+                    <span id="stockGG">
+                        GG: 0
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TAMANHO -->
+
+            <div class="form-group">
+
+                <label for="tamanho">
+                    Tamanho
+                </label>
+
+                <select
+                    name="tamanho"
+                    id="tamanho"
+                    required
+                    disabled
+                >
+
+                    <option value="">
+                        Primeiro selecione um produto
+                    </option>
+
+                </select>
+
+                <small id="tamanhoAviso">
+                    Selecione um produto para visualizar os tamanhos disponíveis.
+                </small>
+
+            </div>
+
+
+            <!-- QUANTIDADE -->
+
+            <div class="form-group">
+
+                <label for="quantidade">
+                    Quantidade
+                </label>
+
+                <input
+                    type="number"
+                    name="quantidade"
+                    id="quantidade"
+                    min="1"
+                    value="1"
+                    required
+                    disabled
+                >
+
+                <small id="quantidadeAviso"></small>
+
+            </div>
+
+
+            <!-- PAGAMENTO -->
+
+            <div class="form-group">
+
+                <label for="forma_pagamento">
+                    Forma de pagamento
+                </label>
+
+                <select
+                    name="forma_pagamento"
+                    id="forma_pagamento"
+                    required
+                >
+
+                    <option value="">
+                        Selecione
+                    </option>
+
+                    <option value="PIX">
+                        PIX
+                    </option>
+
+                    <option value="Débito">
+                        Débito
+                    </option>
+
+                    <option value="Crédito">
+                        Crédito
+                    </option>
+
+                    <option value="Dinheiro">
+                        Dinheiro
+                    </option>
+
+                    <option value="Crediário">
+                        Crediário
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DESCONTO MANUAL -->
+
+            <div class="form-group">
+
+                <label for="desconto">
+                    Desconto adicional (R$)
+                </label>
+
+                <input
+                    type="number"
+                    name="desconto"
+                    id="desconto"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- ACRÉSCIMO -->
+
+            <div class="form-group">
+
+                <label for="acrescimo">
+                    Acréscimo (R$)
+                </label>
+
+                <input
+                    type="number"
+                    name="acrescimo"
+                    id="acrescimo"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- VALOR FINAL -->
+
+            <div class="entry-total">
+
+                Valor final:
+
+                <strong>
+                    R$
+                    <span id="valorFinal">
+                        0,00
+                    </span>
+                </strong>
+
+            </div>
+
+
+            <!-- BOTÕES -->
+
+            <div class="form-actions">
+
+                <a
+                    href="/vendas"
+                    class="btn-cancel"
+                >
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-add"
+                    id="btnRegistrar"
+                    disabled
+                >
+                    🛒 Registrar venda
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- POP-UP DE ERRO -->
+
+<div
+    id="errorPopup"
+    class="error-popup"
+>
+
+    <div class="error-popup-content">
+
+        <button
+            type="button"
+            class="close-popup"
+            onclick="fecharPopup()"
+        >
+            ×
+        </button>
+
+        <div class="error-icon">
+            ⚠️
+        </div>
+
+        <h3 id="errorTitle">
+            Atenção
+        </h3>
+
+        <p id="errorMessage">
+            Ocorreu um problema.
+        </p>
+
+        <button
+            type="button"
+            class="btn-add"
+            onclick="fecharPopup()"
+        >
+            Entendi
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+const tipoVendaSelect =
+    document.getElementById("tipo_venda");
+
+
+const produtoSelect =
+    document.getElementById("produto_id");
+
+
+const tamanhoSelect =
+    document.getElementById("tamanho");
+
+
+const quantidadeInput =
+    document.getElementById("quantidade");
+
+
+const quantidadeAviso =
+    document.getElementById("quantidadeAviso");
+
+
+const tamanhoAviso =
+    document.getElementById("tamanhoAviso");
+
+
+const btnRegistrar =
+    document.getElementById("btnRegistrar");
+
+
+const estoqueDisponivel =
+    document.getElementById("estoqueDisponivel");
+
+
+const estoqueTitulo =
+    document.getElementById("estoqueTitulo");
+
+
+const descontoInput =
+    document.getElementById("desconto");
+
+
+const acrescimoInput =
+    document.getElementById("acrescimo");
+
+
+const valorFinal =
+    document.getElementById("valorFinal");
+
+
+const tipoVendaAviso =
+    document.getElementById("tipoVendaAviso");
+
+
+let estoques = {};
+
+let precoAtual = 0;
+
+
+
+function mostrarPopup(titulo, mensagem) {
+
+    document.getElementById("errorTitle").textContent =
+        titulo;
+
+    document.getElementById("errorMessage").textContent =
+        mensagem;
+
+    document
+        .getElementById("errorPopup")
+        .classList
+        .add("show");
+
+}
+
+
+
+function fecharPopup() {
+
+    document
+        .getElementById("errorPopup")
+        .classList
+        .remove("show");
+
+}
+
+
+
+/*
+==================================================
+TIPO DA VENDA
+==================================================
+*/
+
+tipoVendaSelect.addEventListener(
+    "change",
+    function() {
+
+        const tipo = tipoVendaSelect.value;
+
+
+        produtoSelect.value = "";
+
+        tamanhoSelect.innerHTML = `
+            <option value="">
+                Primeiro selecione um produto
+            </option>
+        `;
+
+        tamanhoSelect.disabled = true;
+
+        quantidadeInput.disabled = true;
+
+        quantidadeInput.value = 1;
+
+        btnRegistrar.disabled = true;
+
+        estoqueDisponivel.style.display = "none";
+
+        valorFinal.textContent = "0,00";
+
+
+        if (!tipo) {
+
+            produtoSelect.disabled = true;
+
+            tipoVendaAviso.textContent =
+                "Escolha se a venda será normal ou promocional.";
+
+            return;
+
+        }
+
+
+        produtoSelect.disabled = false;
+
+
+        if (tipo === "normal") {
+
+            tipoVendaAviso.textContent =
+                "A venda utilizará somente o estoque normal.";
+
+        }
+
+
+        if (tipo === "promocao") {
+
+            tipoVendaAviso.textContent =
+                "A venda utilizará somente o estoque promocional.";
+
+        }
+
+    }
+);
+
+
+
+/*
+==================================================
+SELECIONAR PRODUTO
+==================================================
+*/
+
+produtoSelect.addEventListener(
+    "change",
+    function() {
+
+
+        const opcao =
+            produtoSelect.options[
+                produtoSelect.selectedIndex
+            ];
+
+
+        const tipo =
+            tipoVendaSelect.value;
+
+
+        if (!opcao.value || !tipo) {
+
+            estoqueDisponivel.style.display =
+                "none";
+
+            tamanhoSelect.disabled =
+                true;
+
+            quantidadeInput.disabled =
+                true;
+
+            btnRegistrar.disabled =
+                true;
+
+            return;
+
+        }
+
+
+        let unico;
+        let p;
+        let m;
+        let g;
+        let gg;
+
+
+        /*
+        ==========================================
+        ESTOQUE NORMAL
+        ==========================================
+        */
+
+        if (tipo === "normal") {
+
+            unico =
+                Number(
+                    opcao.dataset.normalUnico
+                ) || 0;
+
+            p =
+                Number(
+                    opcao.dataset.normalP
+                ) || 0;
+
+            m =
+                Number(
+                    opcao.dataset.normalM
+                ) || 0;
+
+            g =
+                Number(
+                    opcao.dataset.normalG
+                ) || 0;
+
+            gg =
+                Number(
+                    opcao.dataset.normalGg
+                ) || 0;
+
+
+            estoqueTitulo.textContent =
+                "Estoque normal disponível";
+
+        }
+
+
+        /*
+        ==========================================
+        ESTOQUE PROMOCIONAL
+        ==========================================
+        */
+
+        if (tipo === "promocao") {
+
+            unico =
+                Number(
+                    opcao.dataset.promoUnico
+                ) || 0;
+
+            p =
+                Number(
+                    opcao.dataset.promoP
+                ) || 0;
+
+            m =
+                Number(
+                    opcao.dataset.promoM
+                ) || 0;
+
+            g =
+                Number(
+                    opcao.dataset.promoG
+                ) || 0;
+
+            gg =
+                Number(
+                    opcao.dataset.promoGg
+                ) || 0;
+
+
+            estoqueTitulo.textContent =
+                "Estoque promocional disponível";
+
+        }
+
+
+        estoques = {
+
+            "Único": unico,
+
+            "P": p,
+
+            "M": m,
+
+            "G": g,
+
+            "GG": gg
+
+        };
+
+
+        document.getElementById("stockUnico").textContent =
+            "Único: " + unico;
+
+        document.getElementById("stockP").textContent =
+            "P: " + p;
+
+        document.getElementById("stockM").textContent =
+            "M: " + m;
+
+        document.getElementById("stockG").textContent =
+            "G: " + g;
+
+        document.getElementById("stockGG").textContent =
+            "GG: " + gg;
+
+
+        estoqueDisponivel.style.display =
+            "block";
+
+
+        /*
+        ==========================================
+        TAMANHOS
+        ==========================================
+        */
+
+        tamanhoSelect.innerHTML = `
+            <option value="">
+                Selecione o tamanho
+            </option>
+        `;
+
+
+        Object.entries(estoques).forEach(
+            ([tamanho, quantidade]) => {
+
+                if (quantidade > 0) {
+
+                    const option =
+                        document.createElement("option");
+
+
+                    option.value =
+                        tamanho;
+
+
+                    option.textContent =
+                        tamanho +
+                        " (" +
+                        quantidade +
+                        " disponível)";
+
+
+                    tamanhoSelect.appendChild(
+                        option
+                    );
+
+                }
+
+            }
+        );
+
+
+        tamanhoSelect.disabled =
+            tamanhoSelect.options.length <= 1;
+
+
+        quantidadeInput.disabled =
+            true;
+
+
+        quantidadeInput.value =
+            1;
+
+
+        btnRegistrar.disabled =
+            true;
+
+
+        if (
+            tamanhoSelect.options.length <= 1
+        ) {
+
+            if (tipo === "normal") {
+
+                tamanhoAviso.textContent =
+                    "Este produto não possui estoque normal disponível.";
+
+                mostrarPopup(
+                    "Sem estoque normal",
+                    "Este produto não possui nenhum tamanho disponível no estoque normal."
+                );
+
+            } else {
+
+                tamanhoAviso.textContent =
+                    "Este produto não possui estoque promocional disponível.";
+
+                mostrarPopup(
+                    "Sem estoque promocional",
+                    "Este produto não possui nenhum tamanho disponível para venda promocional."
+                );
+
+            }
+
+        } else {
+
+            if (tipo === "normal") {
+
+                tamanhoAviso.textContent =
+                    "Somente tamanhos com estoque normal aparecem aqui.";
+
+            } else {
+
+                tamanhoAviso.textContent =
+                    "Somente tamanhos com estoque promocional aparecem aqui.";
+
+            }
+
+        }
+
+
+        calcularVenda();
+
+    }
+);
+
+
+
+/*
+==================================================
+SELECIONAR TAMANHO
+==================================================
+*/
+
+tamanhoSelect.addEventListener(
+    "change",
+    function() {
+
+
+        const tamanho =
+            tamanhoSelect.value;
+
+
+        if (!tamanho) {
+
+            quantidadeInput.disabled =
+                true;
+
+            btnRegistrar.disabled =
+                true;
+
+            valorFinal.textContent =
+                "0,00";
+
+            return;
+
+        }
+
+
+        const disponivel =
+            estoques[tamanho];
+
+
+        quantidadeInput.disabled =
+            false;
+
+
+        quantidadeInput.max =
+            disponivel;
+
+
+        quantidadeInput.value =
+            1;
+
+
+        quantidadeAviso.textContent =
+            "Disponível: " +
+            disponivel +
+            " unidade(s).";
+
+
+        btnRegistrar.disabled =
+            false;
+
+
+        calcularVenda();
+
+    }
+);
+
+
+
+/*
+==================================================
+QUANTIDADE
+==================================================
+*/
+
+quantidadeInput.addEventListener(
+    "input",
+    function() {
+
+
+        const tamanho =
+            tamanhoSelect.value;
+
+
+        const disponivel =
+            estoques[tamanho];
+
+
+        let quantidade =
+            Number(
+                quantidadeInput.value
+            );
+
+
+        if (
+            quantidade > disponivel
+        ) {
+
+            quantidadeInput.value =
+                disponivel;
+
+
+            mostrarPopup(
+                "Estoque insuficiente",
+                "Você pode vender no máximo " +
+                disponivel +
+                " unidade(s) desse tamanho."
+            );
+
+        }
+
+
+        if (
+            quantidade < 1 ||
+            isNaN(quantidade)
+        ) {
+
+            quantidadeInput.value =
+                1;
+
+        }
+
+
+        calcularVenda();
+
+    }
+);
+
+
+
+/*
+==================================================
+CALCULAR VENDA
+==================================================
+*/
+
+function calcularVenda() {
+
+
+    const opcao =
+        produtoSelect.options[
+            produtoSelect.selectedIndex
+        ];
+
+
+    if (!opcao || !opcao.value) {
+
+        valorFinal.textContent =
+            "0,00";
+
+        return;
+
+    }
+
+
+    const tipo =
+        tipoVendaSelect.value;
+
+
+    const quantidade =
+        Number(
+            quantidadeInput.value
+        ) || 0;
+
+
+    const desconto =
+        Number(
+            descontoInput.value
+        ) || 0;
+
+
+    const acrescimo =
+        Number(
+            acrescimoInput.value
+        ) || 0;
+
+
+    const precoNormal =
+        Number(
+            opcao.dataset.preco
+        ) || 0;
+
+
+    /*
+    A promoção possui um preço
+    próprio que será definido pelo
+    backend no momento da venda.
+
+    Aqui mostramos inicialmente
+    o preço normal. O backend fará
+    a validação definitiva.
+    */
+
+    let preco =
+        precoNormal;
+
+
+    if (tipo === "promocao") {
+
+        /*
+        O preço promocional será
+        atualizado quando o backend
+        receber a venda.
+        */
+
+        preco =
+            precoNormal;
+
+    }
+
+
+    precoAtual =
+        preco;
+
+
+    const subtotal =
+        preco *
+        quantidade;
+
+
+    const total =
+        subtotal -
+        desconto +
+        acrescimo;
+
+
+    if (total < 0) {
+
+        valorFinal.textContent =
+            "0,00";
+
+        return;
+
+    }
+
+
+    valorFinal.textContent =
+        total
+            .toFixed(2)
+            .replace(".", ",");
+
+}
+
+
+
+quantidadeInput.addEventListener(
+    "input",
+    calcularVenda
+);
+
+
+descontoInput.addEventListener(
+    "input",
+    calcularVenda
+);
+
+
+acrescimoInput.addEventListener(
+    "input",
+    calcularVenda
+);
+
+
+</script>
+
+
+</body>
+
+</html>

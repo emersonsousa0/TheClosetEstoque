@@ -1,0 +1,336 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Estoque - The Closet</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>THE CLOSET</h2>
+
+    <p class="menu-subtitle">GESTÃO DE ESTOQUE</p>
+
+    <nav>
+
+        <a href="/">🏠 Dashboard</a>
+
+        <a href="/produtos">📦 Produtos</a>
+
+        <a href="/entradas">📥 Entradas</a>
+
+        <a href="/vendas">🛒 Vendas</a>
+
+        <a href="/estoque">📊 Estoque</a>
+
+        <a href="/promocoes">🏷️ Promoções</a>
+
+    </nav>
+
+</div>
+
+
+<div class="content">
+
+    <h1>Estoque</h1>
+
+    <p class="subtitle">
+        Visualização geral dos produtos disponíveis
+    </p>
+
+
+    <div class="stock-summary">
+
+        <div class="stock-summary-card">
+
+            <span>Produtos</span>
+
+            <strong>
+                {{ produtos|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="stock-summary-card">
+
+            <span>Unidades</span>
+
+            <strong>
+
+                {% set total_geral = namespace(valor=0) %}
+
+                {% for produto in produtos %}
+
+                    {% set total_geral.valor = total_geral.valor + produto.estoque_total() %}
+
+                {% endfor %}
+
+                {{ total_geral.valor }}
+
+            </strong>
+
+        </div>
+
+
+        <div class="stock-summary-card">
+
+            <span>Estoque baixo</span>
+
+            <strong>
+
+                {% set baixo = namespace(valor=0) %}
+
+                {% for produto in produtos %}
+
+                    {% if produto.estoque_total() > 0 and produto.estoque_total() <= 5 %}
+
+                        {% set baixo.valor = baixo.valor + 1 %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+                {{ baixo.valor }}
+
+            </strong>
+
+        </div>
+
+
+        <div class="stock-summary-card">
+
+            <span>Sem estoque</span>
+
+            <strong>
+
+                {% set vazio = namespace(valor=0) %}
+
+                {% for produto in produtos %}
+
+                    {% if produto.estoque_total() == 0 %}
+
+                        {% set vazio.valor = vazio.valor + 1 %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+                {{ vazio.valor }}
+
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELEÇÃO DE PRODUTO -->
+
+    <div class="stock-search">
+
+        <select id="searchStock">
+
+            <option value="">
+                Todos os produtos
+            </option>
+
+            {% for produto in produtos %}
+
+                <option value="{{ produto.nome|lower }}">
+                    {{ produto.nome }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <!-- LISTA DE ESTOQUE -->
+
+    <div class="stock-list" id="stockList">
+
+        {% if produtos %}
+
+            {% for produto in produtos %}
+
+                {% set total = produto.estoque_total() %}
+
+
+                <div
+                    class="stock-card"
+                    data-name="{{ produto.nome|lower }}"
+                >
+
+                    <div class="stock-product-info">
+
+                        <h3>
+                            {{ produto.nome }}
+                        </h3>
+
+                        <p>
+                            {{ produto.genero }}
+                            •
+                            {{ produto.categoria }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="stock-sizes">
+
+                        <span>
+                            Único: {{ produto.tamanho_unico }}
+                        </span>
+
+                        <span>
+                            P: {{ produto.tamanho_p }}
+                        </span>
+
+                        <span>
+                            M: {{ produto.tamanho_m }}
+                        </span>
+
+                        <span>
+                            G: {{ produto.tamanho_g }}
+                        </span>
+
+                        <span>
+                            GG: {{ produto.tamanho_gg }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="stock-total">
+
+                        <strong>
+                            {{ total }}
+                        </strong>
+
+                        <span>
+                            unidades
+                        </span>
+
+
+                        {% if total == 0 %}
+
+                            <div class="stock-status stock-empty">
+                                Sem estoque
+                            </div>
+
+                        {% elif total <= 5 %}
+
+                            <div class="stock-status stock-low">
+                                Estoque baixo
+                            </div>
+
+                        {% else %}
+
+                            <div class="stock-status stock-ok">
+                                Estoque normal
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Nenhum produto cadastrado
+                </h3>
+
+                <p>
+                    Cadastre produtos para visualizar o estoque.
+                </p>
+
+                <a
+                    href="/produtos/novo"
+                    class="btn-add"
+                >
+                    + Adicionar produto
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const searchSelect =
+        document.getElementById("searchStock");
+
+    const cards =
+        document.querySelectorAll(".stock-card");
+
+
+    searchSelect.addEventListener("change", function() {
+
+        const selected =
+            searchSelect.value;
+
+
+        cards.forEach(function(card) {
+
+            const name =
+                card.dataset.name;
+
+
+            if (!selected || name === selected) {
+
+                card.style.display = "";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
+```

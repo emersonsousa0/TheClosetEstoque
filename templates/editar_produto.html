@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Produto - The Closet</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="sidebar">
+
+    <h2>THE CLOSET</h2>
+
+    <p class="menu-subtitle">GESTÃO DE ESTOQUE</p>
+
+    <nav>
+
+        <a href="/">🏠 Dashboard</a>
+
+        <a href="/produtos">📦 Produtos</a>
+
+        <a href="#">📥 Entradas</a>
+
+        <a href="#">🛒 Vendas</a>
+
+        <a href="#">📊 Estoque</a>
+
+        <a href="/promocoes">🏷️ Promoções</a>
+
+    </nav>
+
+</div>
+
+
+<div class="content">
+
+    <h1>Editar Produto</h1>
+
+    <p class="subtitle">
+        Atualize as informações da peça
+    </p>
+
+
+    <div class="form-container">
+
+        <form method="POST">
+
+
+            <h2 class="form-title">
+                Informações do produto
+            </h2>
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="nome">
+                        Nome da peça
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        value="{{ produto.nome }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="categoria">
+                        Categoria
+                    </label>
+
+                    <select
+                        id="categoria"
+                        name="categoria"
+                        required
+                    >
+
+                        <option value="Camiseta" {% if produto.categoria == "Camiseta" %}selected{% endif %}>
+                            Camiseta
+                        </option>
+
+                        <option value="Blusa" {% if produto.categoria == "Blusa" %}selected{% endif %}>
+                            Blusa
+                        </option>
+
+                        <option value="Vestido" {% if produto.categoria == "Vestido" %}selected{% endif %}>
+                            Vestido
+                        </option>
+
+                        <option value="Calça" {% if produto.categoria == "Calça" %}selected{% endif %}>
+                            Calça
+                        </option>
+
+                        <option value="Shorts" {% if produto.categoria == "Shorts" %}selected{% endif %}>
+                            Shorts
+                        </option>
+
+                        <option value="Saia" {% if produto.categoria == "Saia" %}selected{% endif %}>
+                            Saia
+                        </option>
+
+                        <option value="Conjunto" {% if produto.categoria == "Conjunto" %}selected{% endif %}>
+                            Conjunto
+                        </option>
+
+                        <option value="Jaqueta" {% if produto.categoria == "Jaqueta" %}selected{% endif %}>
+                            Jaqueta
+                        </option>
+
+                        <option value="Outra" {% if produto.categoria == "Outra" %}selected{% endif %}>
+                            Outra
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="genero">
+                        Público
+                    </label>
+
+                    <select
+                        id="genero"
+                        name="genero"
+                        required
+                    >
+
+                        <option value="Feminino" {% if produto.genero == "Feminino" %}selected{% endif %}>
+                            Feminino
+                        </option>
+
+                        <option value="Masculino" {% if produto.genero == "Masculino" %}selected{% endif %}>
+                            Masculino
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="preco">
+                        Preço
+                    </label>
+
+                    <input
+                        type="number"
+                        id="preco"
+                        name="preco"
+                        value="{{ produto.preco }}"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <h2 class="form-title">
+                Quantidade por tamanho
+            </h2>
+
+
+            <div class="sizes">
+
+
+                <div class="size-group">
+
+                    <label for="tamanho_unico">
+                        Único
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tamanho_unico"
+                        name="tamanho_unico"
+                        value="{{ produto.tamanho_unico }}"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="size-group">
+
+                    <label for="tamanho_p">
+                        P
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tamanho_p"
+                        name="tamanho_p"
+                        value="{{ produto.tamanho_p }}"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="size-group">
+
+                    <label for="tamanho_m">
+                        M
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tamanho_m"
+                        name="tamanho_m"
+                        value="{{ produto.tamanho_m }}"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="size-group">
+
+                    <label for="tamanho_g">
+                        G
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tamanho_g"
+                        name="tamanho_g"
+                        value="{{ produto.tamanho_g }}"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="size-group">
+
+                    <label for="tamanho_gg">
+                        GG
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tamanho_gg"
+                        name="tamanho_gg"
+                        value="{{ produto.tamanho_gg }}"
+                        min="0"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a href="/produtos" class="btn-cancel">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="btn-save">
+                    Salvar alterações
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

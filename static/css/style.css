@@ -1,0 +1,1267 @@
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    background: #f8f8f8;
+}
+
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #111;
+    color: white;
+    padding: 30px;
+    position: fixed;
+}
+
+
+.sidebar h2 {
+    color: #d4af37;
+}
+
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 0;
+}
+
+
+.sidebar a:hover {
+    color: #d4af37;
+}
+
+
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+.sidebar h2 {
+    font-family: "Cinzel", serif;
+    color: #d4af37;
+    letter-spacing: 2px;
+}
+
+.content h1 {
+    font-family: "Cinzel", serif;
+    color: #111;
+}
+
+
+.subtitle {
+    color: #777;
+    margin-bottom: 40px;
+}
+
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 25px;
+
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+
+}
+
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(212,175,55,0.25);
+
+}
+
+
+.card h3 {
+
+    font-size: 18px;
+
+    color: #111;
+
+}
+
+
+.card span {
+
+    display: block;
+
+    font-size: 35px;
+
+    font-weight: bold;
+
+    color: #d4af37;
+
+    margin: 15px 0;
+
+}
+
+
+.card p {
+
+    color: #777;
+
+    margin: 0;
+
+}
+
+.cards {
+    margin-top: 30px;
+}
+
+.sidebar nav {
+    margin-top: 30px;
+}
+
+
+.sidebar nav a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+
+.sidebar nav a:hover {
+    background: #d4af37;
+    color: #111111;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+
+.menu-subtitle {
+    color: #888;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+
+.products-header h2 {
+    font-family: "Cinzel", serif;
+    margin: 0;
+    color: #111;
+}
+
+
+.btn-add {
+    display: inline-block;
+    background: #d4af37;
+    color: #111;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+
+.btn-add:hover {
+    background: #111;
+    color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);
+}
+
+
+.empty-state {
+    background: white;
+    border-radius: 15px;
+    padding: 60px 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+.empty-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+
+.empty-state h3 {
+    font-family: "Cinzel", serif;
+    color: #111;
+}
+
+
+.empty-state p {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.form-container {
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    margin-top: 35px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    max-width: 1000px;
+}
+
+
+.form-title {
+    font-family: "Cinzel", serif;
+    font-size: 22px;
+    color: #111;
+    margin-bottom: 25px;
+}
+
+
+.form-description {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-group label,
+.size-group label {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+
+.form-group input,
+.form-group select,
+.size-group input {
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    padding: 12px 14px;
+    font-family: "Montserrat", sans-serif;
+    outline: none;
+    transition: 0.3s;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.size-group input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+}
+
+
+.sizes {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 35px;
+    width: 100%;
+}
+
+.size-group {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.size-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+}
+
+
+.btn-cancel {
+    padding: 12px 22px;
+    border-radius: 9px;
+    border: 1px solid #ddd;
+    color: #555;
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    transition: 0.3s;
+}
+
+
+.btn-cancel:hover {
+    background: #f5f5f5;
+    color: #111;
+}
+
+
+.btn-save {
+    border: none;
+    background: #d4af37;
+    color: #111;
+    padding: 12px 22px;
+    border-radius: 9px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.btn-save:hover {
+    background: #111;
+    color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);
+}
+
+@media (max-width: 800px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .sizes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .content {
+        padding: 20px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .sizes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+        text-align: center;
+    }
+
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.product-card {
+    background: white;
+    border-radius: 15px;
+    padding: 22px 25px;
+
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr 1.5fr auto;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+
+    transition: all 0.3s ease;
+}
+
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
+
+.product-info h3 {
+    font-family: "Cinzel", serif;
+    font-size: 19px;
+    margin: 0 0 5px;
+    color: #111;
+}
+
+
+.product-info p {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+}
+
+
+.product-price {
+    font-weight: 600;
+    font-size: 17px;
+    color: #111;
+}
+
+
+.product-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+
+.product-sizes span {
+    background: #f5f5f5;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #555;
+}
+
+
+.product-total {
+    text-align: right;
+    color: #777;
+    font-size: 13px;
+}
+
+
+.product-total strong {
+    color: #d4af37;
+    font-size: 20px;
+}
+
+
+@media (max-width: 900px) {
+
+    .product-card {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .product-total {
+        text-align: left;
+    }
+
+    .product-actions {
+        justify-content: flex-start;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .product-card {
+        grid-template-columns: 1fr;
+    }
+
+    .product-price {
+        margin-top: -10px;
+    }
+
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.product-actions form {
+    margin: 0;
+}
+
+
+.btn-edit,
+.btn-delete {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.btn-edit {
+    background: #f5f5f5;
+    color: #222;
+}
+
+
+.btn-edit:hover {
+    background: #d4af37;
+    color: #111;
+    transform: translateY(-2px);
+}
+
+
+.btn-delete {
+    background: #111;
+    color: white;
+}
+
+
+.btn-delete:hover {
+    background: #8b0000;
+    transform: translateY(-2px);
+}
+
+
+@media (max-width: 600px) {
+
+    .product-actions {
+        width: 100%;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        flex: 1;
+        text-align: center;
+    }
+
+}
+
+/* ============================= */
+/* ENTRADA DE ESTOQUE */
+/* ============================= */
+
+.entry-sizes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.entry-size {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-size label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.entry-size input {
+    width: 100%;
+    text-align: center;
+}
+
+.entry-total {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 10px;
+    background: #f5f5f5;
+    font-size: 16px;
+}
+
+.entry-total strong {
+    font-size: 22px;
+    margin: 0 5px;
+}
+
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    .entry-sizes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* ============================= */
+/* ESTOQUE NA VENDA */
+/* ============================= */
+
+.stock-preview {
+    margin: 20px 0;
+    padding: 18px;
+    border-radius: 10px;
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+}
+
+.stock-preview h3 {
+    margin-bottom: 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+}
+
+.stock-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stock-sizes span {
+    padding: 8px 14px;
+    background: white;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+
+/* ============================= */
+/* POP-UP DE ERRO */
+/* ============================= */
+
+.error-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.25s ease;
+
+    z-index: 9999;
+}
+
+.error-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.error-popup-content {
+    position: relative;
+
+    width: min(420px, 90%);
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+
+    transform: translateY(15px);
+
+    transition: 0.25s ease;
+}
+
+.error-popup.show .error-popup-content {
+    transform: translateY(0);
+}
+
+.error-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.error-popup-content h3 {
+    font-family: 'Cinzel', serif;
+    margin-bottom: 10px;
+}
+
+.error-popup-content p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.close-popup {
+    position: absolute;
+
+    top: 10px;
+    right: 15px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    color: #777;
+}
+
+.close-popup:hover {
+    color: #000;
+}
+
+/* ============================= */
+/* ESTOQUE */
+/* ============================= */
+
+.stock-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.stock-summary-card {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.stock-summary-card span {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.stock-summary-card strong {
+    font-size: 28px;
+    font-family: 'Cinzel', serif;
+}
+
+
+.stock-search {
+    margin-bottom: 20px;
+}
+
+.stock-search select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    background: white;
+    cursor: pointer;
+}
+
+.stock-search select:focus {
+    border-color: #b89445;
+}
+
+.stock-search input:focus {
+    border-color: #b89445;
+}
+
+
+.stock-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.stock-card {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr;
+    align-items: center;
+    gap: 25px;
+
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+
+    padding: 22px;
+}
+
+
+.stock-product-info h3 {
+    margin: 0 0 7px;
+    font-family: 'Cinzel', serif;
+}
+
+.stock-product-info p {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+}
+
+
+.stock-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.stock-sizes span {
+    padding: 7px 11px;
+    background: #f6f6f6;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+
+.stock-total {
+    text-align: right;
+}
+
+.stock-total strong {
+    display: block;
+    font-size: 28px;
+    font-family: 'Cinzel', serif;
+}
+
+.stock-total span {
+    color: #777;
+    font-size: 12px;
+}
+
+
+.stock-status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stock-ok {
+    background: #e9f5ec;
+    color: #287a3d;
+}
+
+.stock-low {
+    background: #fff4d6;
+    color: #9a6a00;
+}
+
+.stock-empty {
+    background: #f9e8e8;
+    color: #a33a3a;
+}
+
+
+@media (max-width: 900px) {
+
+    .stock-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stock-card {
+        grid-template-columns: 1fr;
+    }
+
+    .stock-total {
+        text-align: left;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .stock-summary {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.promotion-form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.btn-finish-promotion {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    background: #222;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-finish-promotion:hover {
+    opacity: 0.9;
+}
+
+.form-cancel {
+    margin-top: 15px;
+}
+
+.form-cancel a {
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.promotion-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    background: #fff;
+}
+
+.promotion-item-header {
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+}
+
+.btn-remove-item {
+    border: none;
+    background: transparent;
+    color: #a33a3a;
+    padding: 8px 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.current-price {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #f8f8f8;
+    color: #777;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+/* ================================================= */
+/* TAMANHOS DA PROMOÇÃO */
+/* ================================================= */
+
+.sizes-promotion {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.size-option {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.size-option span {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.size-option strong {
+    font-size: 16px;
+}
+
+.size-option:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.size-option:not(:disabled):hover {
+    border-color: #999;
+    transform: translateY(-1px);
+}
+
+.size-option.selected {
+    background: #222;
+    color: white;
+    border-color: #222;
+}
+
+
+/* ================================================= */
+/* PREÇO ATUAL */
+/* ================================================= */
+
+.current-price {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #f8f8f8;
+    color: #777;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+
+/* ================================================= */
+/* BOTÕES DA PROMOÇÃO */
+/* ================================================= */
+
+.promotion-form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.btn-finish-promotion {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    background: #222;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-finish-promotion:hover {
+    opacity: 0.9;
+}
+
+
+/* ================================================= */
+/* CARD DA PEÇA */
+/* ================================================= */
+
+.promotion-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    background: #fff;
+}
+
+.promotion-item-header {
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+}
+
+
+/* ================================================= */
+/* REMOVER PEÇA */
+/* ================================================= */
+
+.btn-remove-item {
+    border: none;
+    background: transparent;
+    color: #a33a3a;
+    padding: 8px 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* ================================================= */
+/* CANCELAR */
+/* ================================================= */
+
+.form-cancel {
+    margin-top: 15px;
+}
+
+.form-cancel a {
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* ================================================= */
+/* TABELA DE TAMANHOS DA PROMOÇÃO */
+/* ================================================= */
+
+.promotion-size-table {
+    width: 100%;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.promotion-size-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr;
+    align-items: center;
+    min-height: 58px;
+    border-bottom: 1px solid #eee;
+}
+
+.promotion-size-row:last-child {
+    border-bottom: none;
+}
+
+.promotion-size-row > div {
+    padding: 10px 14px;
+}
+
+.promotion-size-header {
+    background: #f7f7f7;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: #777;
+}
+
+.estoque-cell {
+    font-weight: 600;
+}
+
+.quantidade-tamanho {
+    width: 100%;
+    max-width: 120px;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+}
+
+.quantidade-tamanho:focus {
+    border-color: #555;
+}
+
+.quantidade-tamanho:disabled {
+    background: #f1f1f1;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+/* ================================================= */
+/* PREÇO ATUAL */
+/* ================================================= */
+
+.current-price {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #f8f8f8;
+    color: #777;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+
+/* ================================================= */
+/* CARD DO PRODUTO */
+/* ================================================= */
+
+.promotion-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    background: #fff;
+}
+
+.promotion-item-header {
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+}
+
+
+/* ================================================= */
+/* BOTÕES */
+/* ================================================= */
+
+.promotion-form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.btn-finish-promotion {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    background: #222;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-finish-promotion:hover {
+    opacity: 0.9;
+}
+
+.btn-remove-item {
+    border: none;
+    background: transparent;
+    color: #a33a3a;
+    padding: 8px 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-cancel {
+    margin-top: 15px;
+}
+
+.form-cancel a {
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+}
